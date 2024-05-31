@@ -1,0 +1,81 @@
+""" Juego del Ahoracado, Consigna:
+El objetivo consiste en desarrollar el juego interactivo “adivina la palabra”. 
+El funcionamiento esperado es el siguiente:
+Al ejecutar el programa se mostrará por pantalla una palabra oculta usando tantos guiones 
+como letras contiene la palabra a adivinar(la palabra a adivinar será elegida por el 
+programa usando el módulo de Python random), la cantidad de vidas con las que cuenta el 
+jugador y las cantidad de letras incorrectas que va ingresando.
+Cuando el jugador ingresa una letra es necesario que se valide el dato( que sea una letra). 
+Luego de validar la letra ingresada se corrobora si la letra ingresada pertenece a alguna de 
+las letras de la palabra a adivinar. 
+Cada vez que el jugador ingrese una letra que NO pertenece a la palabra a adivinar se 
+restará una vida.
+El juego finaliza cuando el jugador queda sin vidas o cuando adivina todas las letras de la 
+palabra. Para todos los casos se debe mostrar un mensaje indicando si ganó la partida o si 
+perdió. """
+
+"""Descripción del Programa:
+
+Mostrar:
+Palabra oculta con guiones.
+Vidas del jugador.
+Letras incorrectas.
+
+Ingreso de Letra:
+Validar que sea una letra.
+
+Verificación:
+Si la letra está en la palabra, revelar la letra.
+Si no está, restar una vida.
+
+Fin del Juego:
+Termina al quedarse sin vidas o adivinar la palabra.
+Mostrar mensaje de victoria o derrota."""
+
+
+
+import random
+palabras = random.choice(["proyecto", "asincronico", "mate", "bizcocho", "campeones"]) #eleccion al azar dentro de la lista de palabras dada
+
+palabra_oculta = ["_" for _ in palabras] #se cambian las letras de la plabra oculta por guiones
+
+vidas = 6 #Variable vidas
+letras_incorrectas = [] #variable letras incorrectas
+
+
+while True:
+  #Imprimir datos de la partida
+  print("Palabra oculta:" , " ".join(palabra_oculta))
+  print("-`♡´- VIDAS -`♡´- :", vidas)
+  print("Letras incorrectas :", ", ".join(letras_incorrectas))
+
+  nueva_letra = input("Ingrese una letra, tu puedes (˶ᵔ ᵕ ᵔ˶)~✧ : ").lower() # Pedir al jugador q ingrese una nueva letra, convertirla con lower
+  print ("========================================================================")
+
+ 
+  if not nueva_letra.isalpha():
+    print("Por favor, ingrese una letra válida.") #Corroboro si el nuevo caracter ingresado es una letra
+    print("No trates de romper el programa (╥﹏╥)")
+    continue
+
+
+  if nueva_letra in palabras: #check de si la letra esta en la palabra
+
+    for i, letra in enumerate(palabras):  #Revelar la letra
+     
+      if letra == nueva_letra:
+        palabra_oculta[i] = letra  #Revelar la letra
+
+  else:
+    vidas -= 1 #Restar una vida 
+    letras_incorrectas.append(nueva_letra) #Agregar la letra a las letras incorrectas
+
+  #Check vidas
+
+  if vidas == 0:
+    print("⸜(｡˃ ᵕ ˂ ) ¡Has perdido! ⸜(｡˃ ᵕ ˂ )⸝ La palabra era", palabras) #Mensaje si el jugador pierde
+    break
+
+  elif "_" not in palabra_oculta:
+    print("(´｡• ◡ •｡`) ♡  ¡Has ganado!  (´｡• ◡ •｡`) ♡  La palabra era", palabras) #Mensaje si el jugador gana
+    break
